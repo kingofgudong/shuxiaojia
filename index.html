@@ -4,717 +4,187 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
   <meta name="theme-color" content="#7568f5">
-  <title>数小嘉数学小课堂</title>
+  <title>数小嘉动画小课堂</title>
   <link rel="icon" type="image/png" href="shuxiaojia.png">
   <style>
     :root {
-      --purple: #7568f5;
-      --purple-dark: #5548d8;
-      --yellow: #ffd75e;
-      --orange: #ff8a58;
-      --mint: #70d9ba;
-      --ink: #383450;
-      --muted: #89849d;
-      --paper: #f7f6fd;
-      --white: #fff;
-      --shadow: 0 14px 34px rgba(66, 53, 151, .16);
+      --purple:#7568f5;
+      --purple-dark:#5548d8;
+      --yellow:#ffd45b;
+      --mint:#65d6b4;
+      --ink:#3d3858;
+      --muted:#8d879f;
+      --white:#fff;
+      --shadow:0 18px 45px rgba(60,47,139,.18);
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      overflow: hidden;
-      color: var(--ink);
-      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-      background: linear-gradient(145deg, #dcd7ff, #fff3c3);
-      -webkit-tap-highlight-color: transparent;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      overflow:hidden;
+      color:var(--ink);
+      font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+      background:linear-gradient(145deg,#ddd8ff,#fff3bf);
+      -webkit-tap-highlight-color:transparent;
     }
-    button, input { font: inherit; }
-    button { border: 0; cursor: pointer; }
-    .app {
-      position: relative;
-      width: min(100%, 480px);
-      height: 100dvh;
-      min-height: 560px;
-      margin: auto;
-      overflow: hidden;
-      background: var(--paper);
-      box-shadow: 0 0 60px rgba(49, 39, 113, .17);
-    }
-    .screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(16px);
-      transition: .35s ease;
-    }
-    .screen.active { opacity: 1; visibility: visible; transform: translateY(0); }
-
-    /* 欢迎页 */
-    .welcome {
-      align-items: center;
-      justify-content: center;
-      padding: max(28px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
-      text-align: center;
+    button{border:0;font:inherit;cursor:pointer}
+    .app{
+      position:relative;
+      width:min(100%,480px);
+      height:100dvh;
+      min-height:560px;
+      margin:auto;
+      overflow:hidden;
       background:
-        radial-gradient(circle at 14% 17%, rgba(255,255,255,.9) 0 4px, transparent 5px),
-        radial-gradient(circle at 84% 23%, rgba(255,255,255,.9) 0 3px, transparent 4px),
-        linear-gradient(155deg, #efecff 0%, #fbfaff 55%, #fff4ca 100%);
+        radial-gradient(circle at 12% 19%,rgba(255,255,255,.9) 0 4px,transparent 5px),
+        radial-gradient(circle at 87% 25%,rgba(255,255,255,.9) 0 3px,transparent 4px),
+        linear-gradient(165deg,#eeebff 0%,#faf9ff 52%,#fff4c8 100%);
+      box-shadow:0 0 55px rgba(48,38,106,.18);
     }
-    .tag { padding: 7px 14px; border-radius: 999px; color: var(--purple-dark); background: #fff; box-shadow: 0 6px 16px rgba(80,64,174,.12); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
-    .welcome h1 { margin: 15px 0 1px; font-size: 42px; line-height: 1.2; letter-spacing: 4px; }
-    .welcome h1 span { color: var(--purple); }
-    .welcome > p { margin: 2px 0 5px; color: var(--muted); font-size: 14px; }
-    .mascot-stage { position: relative; width: 235px; height: 275px; }
-    .mascot-image { position: absolute; left: 50%; top: 10px; width: 218px; height: 252px; object-fit: cover; object-position: center 48%; border: 6px solid rgba(255,255,255,.92); border-radius: 34px 34px 46px 46px; box-shadow: 0 17px 30px rgba(62,51,133,.2); transform: translateX(-50%); animation: floatImage 3s ease-in-out infinite; }
-    @keyframes floatImage { 50% { transform: translate(-50%,-7px); } }
-    .spark { position: absolute; z-index: 7; color: var(--yellow); font-size: 27px; animation: twinkle 2s ease-in-out infinite; }
-    .spark.one { left: 5px; top: 61px; }.spark.two { right: 2px; top: 113px; color: var(--mint); animation-delay: .7s; }
-    @keyframes twinkle { 50% { opacity: .38; transform: rotate(25deg) scale(.7); } }
-    .mascot { position: absolute; inset: 8px 0 0; animation: float 3s ease-in-out infinite; }
-    @keyframes float { 50% { transform: translateY(-7px); } }
-    .mascot-shadow { position: absolute; left: 43px; bottom: 4px; width: 150px; height: 20px; border-radius: 50%; background: rgba(67,53,136,.14); filter: blur(2px); }
-    .hair { position: absolute; z-index: 2; left: 63px; top: 25px; width: 108px; height: 81px; border-radius: 55px 58px 27px 27px; background: #47364e; transform: rotate(-2deg); }
-    .hair::before { content: ""; position: absolute; left: -10px; top: 4px; width: 43px; height: 36px; border-radius: 80% 20% 80% 20%; background: #47364e; transform: rotate(-25deg); }
-    .face { position: absolute; z-index: 3; left: 66px; top: 51px; width: 102px; height: 107px; border-radius: 45% 45% 48% 48%; background: #ffd3b6; box-shadow: inset 0 -6px rgba(232,157,126,.16); }
-    .ear { position: absolute; z-index: 2; top: 89px; width: 18px; height: 26px; border-radius: 50%; background: #ffc6a6; }.ear.left { left: 56px; }.ear.right { right: 58px; }
-    .glasses { position: absolute; z-index: 5; left: 61px; top: 87px; width: 112px; height: 37px; }
-    .lens { position: absolute; width: 43px; height: 33px; border: 4px solid #4a466a; border-radius: 13px; background: rgba(255,255,255,.22); }.lens.right { right: 0; }
-    .lens:first-child::after { content: ""; position: absolute; left: 39px; top: 10px; width: 20px; height: 4px; background: #4a466a; }
-    .eye { position: absolute; left: 15px; top: 9px; width: 6px; height: 8px; border-radius: 50%; background: #3d3447; }
-    .smile { position: absolute; z-index: 6; left: 105px; top: 131px; width: 24px; height: 12px; border-bottom: 4px solid #d96d70; border-radius: 50%; }
-    .body { position: absolute; z-index: 2; left: 54px; top: 151px; width: 128px; height: 107px; border: 3px solid #e7e3f0; border-radius: 42px 42px 24px 24px; background: #fff; }
-    .tie { position: absolute; z-index: 4; left: 104px; top: 154px; width: 27px; height: 74px; background: var(--purple); clip-path: polygon(50% 0,100% 18%,68% 100%,32% 100%,0 18%); }
-    .coat-line { position: absolute; z-index: 5; left: 117px; top: 167px; width: 3px; height: 87px; background: #e4e1ee; }
-    .badge { position: absolute; z-index: 6; right: 56px; top: 180px; width: 32px; height: 25px; border: 2px solid var(--yellow); border-radius: 6px; color: var(--purple-dark); background: #fff5b9; font-size: 12px; font-weight: 900; line-height: 21px; }
-    .book { position: absolute; z-index: 7; left: 34px; bottom: 12px; width: 75px; height: 54px; padding-top: 13px; border-radius: 5px 15px 15px 5px; color: #fff; background: linear-gradient(135deg,#ff9d55,#ff7164); box-shadow: 0 7px 15px rgba(217,93,65,.2); font-size: 17px; font-weight: 900; transform: rotate(-7deg); }
-    .start-button { width: min(300px, 88%); padding: 16px 20px; border-radius: 19px; color: #fff; background: linear-gradient(135deg,#8177ff,var(--purple-dark)); box-shadow: 0 13px 26px rgba(80,67,211,.3), inset 0 2px rgba(255,255,255,.25); font-size: 18px; font-weight: 900; transition: .15s; }
-    .start-button:active { transform: translateY(2px) scale(.98); }
-    .welcome small { margin-top: 11px; color: #9691a8; font-size: 11px; }
-
-    
-    /* 聊天页 */
-    .chat { background: #f6f5fc; }
-    .header { display: flex; align-items: center; gap: 10px; min-height: 70px; padding: max(11px, env(safe-area-inset-top)) 13px 11px; color: #fff; background: linear-gradient(135deg,#7166ee,#887efb); box-shadow: 0 5px 17px rgba(76,62,179,.2); }
-    .mini-avatar { display: block; flex: 0 0 43px; height: 43px; overflow: hidden; border: 2px solid rgba(255,255,255,.76); border-radius: 14px; background: #fff1b8; box-shadow: 0 4px 10px rgba(49,39,112,.15); }
-    .mini-avatar img, .chat-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 39%; }
-    .header-copy { flex: 1; min-width: 0; }.header h2 { margin: 0; font-size: 17px; }.header p { margin: 3px 0 0; font-size: 11px; opacity: .87; }.header p::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 50%; background: #70efbd; }
-    .restart-button { padding: 8px 9px; border: 1px solid rgba(255,255,255,.4); border-radius: 11px; color: #fff; background: rgba(255,255,255,.13); font-size: 11px; font-weight: 800; }
-    .messages { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 13px 10px; scroll-behavior: smooth; }
-    .date { width: max-content; margin: 0 auto 11px; padding: 4px 10px; border-radius: 999px; color: #9b97ac; background: #eae8f2; font-size: 10px; }
-    .message { display: flex; align-items: flex-end; gap: 7px; margin-bottom: 12px; animation: messageIn .28s ease both; }
-    @keyframes messageIn { from { opacity: 0; transform: translateY(8px); } }
-    .message.user { justify-content: flex-end; }
-    .chat-avatar { display: block; flex: 0 0 30px; height: 30px; overflow: hidden; border: 2px solid #fff; border-radius: 10px; background: #fff0b2; box-shadow: 0 4px 9px rgba(64,51,135,.1); }
-    .bubble { max-width: 79%; padding: 10px 13px; border-radius: 7px 17px 17px 17px; background: #fff; box-shadow: 0 5px 16px rgba(61,50,122,.08); font-size: 14px; line-height: 1.65; }
-    .user .bubble { color: #fff; background: linear-gradient(135deg,#7c72fb,#6258df); border-radius: 17px 7px 17px 17px; }
-    .bubble-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
-    .bubble-actions button { padding: 8px 10px; border-radius: 10px; color: #5147b5; background: #eeebff; font-size: 11px; font-weight: 800; }
-    .bubble-actions .animation-link { color: #9b5d17; background: #fff0c7; }
-    .typing { display: flex; gap: 4px; padding: 14px 16px; }.typing i { width: 7px; height: 7px; border-radius: 50%; background: #aaa5c3; animation: dot 1s ease-in-out infinite; }.typing i:nth-child(2){animation-delay:.16s}.typing i:nth-child(3){animation-delay:.32s}
-    @keyframes dot { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)} }
-    .quick-panel { padding: 8px 12px; border-top: 1px solid #eae7f6; background: rgba(255,255,255,.94); }
-    .quick-panel p { margin: 0 0 7px 2px; color: var(--muted); font-size: 11px; }
-    .quick-list { display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; }.quick-list::-webkit-scrollbar{display:none}
-    .quick-button { flex: 0 0 auto; max-width: 260px; padding: 8px 11px; overflow: hidden; border: 1px solid #dedafd; border-radius: 999px; color: #5951b8; background: #f9f8ff; font-size: 11px; white-space: nowrap; text-overflow: ellipsis; }
-    .input-bar { display: flex; gap: 8px; padding: 8px 12px max(10px,env(safe-area-inset-bottom)); background: #fff; box-shadow: 0 -4px 15px rgba(62,51,125,.06); }
-    .input-bar input { flex: 1; min-width: 0; height: 43px; padding: 0 14px; border: 2px solid #ece9f7; border-radius: 14px; outline: 0; color: var(--ink); background: #faf9ff; }.input-bar input:focus{border-color:#b0aaff;background:#fff}
-    .send-button { flex: 0 0 54px; border-radius: 14px; color: #fff; background: var(--purple); box-shadow: 0 6px 13px rgba(80,67,207,.22); font-weight: 900; }
-
-    /* 十以内加减小游戏 */
-    .game-screen { overflow: hidden; background: linear-gradient(180deg,#dff9ff 0%,#f5f0ff 52%,#fff1b7 100%); }
-    .game-header { display: flex; align-items: center; gap: 10px; min-height: 67px; padding: max(10px,env(safe-area-inset-top)) 13px 10px; color: #fff; background: linear-gradient(135deg,#46c9aa,#6fd8bd); box-shadow: 0 5px 17px rgba(42,151,126,.18); }
-    .game-header h2 { flex: 1; margin: 0; text-align: center; font-size: 17px; letter-spacing: 1px; }
-    .game-nav { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.45); border-radius: 12px; color: #fff; background: rgba(255,255,255,.16); font-size: 23px; }
-    .game-body { position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 12px 17px max(18px,env(safe-area-inset-bottom)); }
-    .game-top { display: flex; align-items: center; justify-content: space-between; min-height: 144px; }
-    .round-dots { display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.72); box-shadow: 0 5px 13px rgba(66,113,109,.08); }
-    .round-dots i { width: 11px; height: 11px; border: 2px solid #a9a3c4; border-radius: 50%; background: #fff; transition: .3s; }.round-dots i.done { border-color: #ffc43d; background: #ffd75e; transform: scale(1.13); }.round-dots i.current { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(117,104,245,.14); }
-    .jar-wrap { position: relative; width: 122px; height: 139px; margin-right: 7px; }
-    .jar-cap { position: absolute; z-index: 4; left: 36px; top: 2px; width: 55px; height: 18px; border: 4px solid #6c67a3; border-radius: 7px; background: #a9a4d7; }
-    .jar-neck { position: absolute; z-index: 2; left: 40px; top: 16px; width: 47px; height: 26px; border-inline: 5px solid #8cc9dc; background: rgba(255,255,255,.45); }
-    .jar { position: absolute; z-index: 3; left: 12px; bottom: 2px; width: 104px; height: 101px; border: 5px solid #78bfd4; border-radius: 22px 22px 35px 35px; background: linear-gradient(135deg,rgba(255,255,255,.76),rgba(184,239,249,.38)); box-shadow: inset 12px 0 rgba(255,255,255,.34),0 8px 17px rgba(60,126,140,.14); }
-    .jar::after { content: ""; position: absolute; right: 10px; top: 11px; width: 8px; height: 52px; border-radius: 999px; background: rgba(255,255,255,.62); }
-    .bottle-star { position: absolute; z-index: 4; display: block; width: 27px; height: 27px; background: radial-gradient(circle at 38% 30%,#fff8a8 0 7%,#ffe85b 17%,#ffc31f 58%,#ff9e18 100%); clip-path: polygon(50% 0%,61% 34%,98% 36%,68% 57%,78% 94%,50% 72%,22% 94%,32% 57%,2% 36%,39% 34%); filter: drop-shadow(0 4px 3px rgba(185,112,8,.25)); }
-    .bottle-star::after { content: ""; position: absolute; left: 8px; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.9); box-shadow: 0 0 7px #fff; }
-    .bottle-star.dropping { animation: starDrop .8s cubic-bezier(.25,.85,.38,1.18) both; }
-    .jar.sparkle { animation: jarGlow .75s ease; }
-    @keyframes starDrop { 0%{opacity:0;transform:translateY(-210px) rotate(-80deg) scale(.35)}65%{opacity:1;transform:translateY(5px) rotate(18deg) scale(1.22)}82%{transform:translateY(-7px) rotate(-7deg) scale(.93)}100%{opacity:1;transform:translateY(0) rotate(0) scale(1)} }
-    @keyframes jarGlow { 45%{border-color:#ffd44c;box-shadow:inset 12px 0 rgba(255,255,255,.34),0 0 24px rgba(255,203,39,.72);transform:scale(1.04)} }
-    .game-card { position: relative; flex: 1; min-height: 250px; padding: 15px 14px 17px; border: 4px solid #fff; border-radius: 27px; background: rgba(255,255,255,.84); box-shadow: 0 14px 31px rgba(69,57,139,.13); text-align: center; }
-    .object-scene { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 83px; padding: 5px 2px; }
-    .object-group { display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 2px; width: 112px; min-height: 64px; }
-    .object-group i { display: inline-block; font-size: 25px; font-style: normal; animation: objectPop .4s ease both; }.object-group i:nth-child(2n){animation-delay:.08s}.object-group i:nth-child(3n){animation-delay:.16s}
-    .object-group i.removed { animation-name: flyAway; animation-duration: 1.3s; animation-timing-function: cubic-bezier(.3,.05,.45,1); animation-fill-mode: both; }
-    @keyframes objectPop { from{opacity:0;transform:translateY(-15px) scale(.5)}70%{transform:translateY(2px) scale(1.14)} }
-    @keyframes flyAway { 0%,18%{opacity:1;filter:none;transform:translate(0,0) rotate(0) scale(1)}45%{opacity:.9;transform:translate(7px,-6px) rotate(7deg) scale(1.05)}100%{opacity:0;filter:grayscale(1);transform:translate(48px,-42px) rotate(32deg) scale(.35)} }
-    .scene-sign { color: var(--purple); font-size: 27px; font-weight: 900; animation: signPulse 1.2s ease-in-out infinite; }
-    @keyframes signPulse { 50%{transform:scale(1.18);color:#ff7c62} }
-    .game-question { margin: 2px 0 13px; color: #4d466f; font-size: 37px; font-weight: 900; letter-spacing: 4px; text-shadow: 0 3px #fff; animation: questionIn .45s ease both; }
-    @keyframes questionIn { from{opacity:0;transform:scale(.75)}70%{transform:scale(1.08)} }
-    .answer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
-    .answer-choice { position: relative; height: 65px; border: 3px solid #dfdbff; border-radius: 20px 20px 24px 24px; color: #554bb2; background: linear-gradient(180deg,#fff,#f4f1ff); box-shadow: 0 7px 14px rgba(72,57,148,.11); font-size: 25px; font-weight: 900; transition: .15s; animation: choiceRise .4s ease both; }.answer-choice:nth-child(2){animation-delay:.08s}.answer-choice:nth-child(3){animation-delay:.16s}
-    .answer-choice::after { content: ""; position: absolute; left: 50%; bottom: -9px; border-width: 9px 7px 0; border-style: solid; border-color: #ded9ff transparent transparent; transform: translateX(-50%); }
-    @keyframes choiceRise { from{opacity:0;transform:translateY(18px)} }
-    .answer-choice:active { transform: scale(.93); }.answer-choice.correct { color:#fff;border-color:#42c99d;background:#55d4aa;animation:correctJump .55s ease }.answer-choice.wrong { color:#fff;border-color:#ff7772;background:#ff8580;animation:wrongShake .45s ease }
-    @keyframes correctJump { 45%{transform:translateY(-10px) scale(1.08)} }.answer-choice.correct::after{border-top-color:#42c99d}.answer-choice.wrong::after{border-top-color:#ff7772}
-    @keyframes wrongShake { 25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)} }
-    .mini-feedback { min-height: 39px; padding-top: 10px; color: #5c5672; font-size: 16px; font-weight: 900; }.mini-feedback.pop { animation:feedbackPop .45s ease }.mini-feedback span { font-size: 23px; }
-    @keyframes feedbackPop { 50%{transform:scale(1.16)} }
-    .game-finish { position: absolute; z-index: 10; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; border-radius: 24px; background: rgba(255,255,255,.96); opacity: 0; visibility: hidden; transform: scale(.86); transition: .35s; }.game-finish.show{opacity:1;visibility:visible;transform:scale(1)}
-    .trophy { font-size: 70px; animation:trophyDance 1.1s ease-in-out infinite }.finish-stars { margin: 3px 0 9px; color:#ffc928;font-size:32px;letter-spacing:5px }.game-finish h3{margin:0 0 15px;color:#514a70;font-size:21px}.game-finish button{padding:13px 28px;border-radius:15px;color:#fff;background:linear-gradient(135deg,#7b70f7,#5a4ed1);box-shadow:0 8px 17px rgba(76,62,194,.22);font-weight:900}
-    @keyframes trophyDance { 25%{transform:rotate(-7deg) translateY(-5px)}75%{transform:rotate(7deg) translateY(-5px)} }
-    .confetti { position:absolute;z-index:11;top:-20px;width:10px;height:16px;border-radius:3px;animation:confettiFall 1.8s linear forwards }.confetti:nth-child(3n){background:#ff7164}.confetti:nth-child(3n+1){background:#ffd34e}.confetti:nth-child(3n+2){background:#65d6b4}
-    @keyframes confettiFall { to{transform:translateY(620px) rotate(540deg);opacity:.2} }
-
-    /* 苹果动画弹窗 */
-    .modal { position: absolute; z-index: 30; inset: 0; display: grid; place-items: center; padding: 17px; background: rgba(39,33,67,.62); backdrop-filter: blur(5px); opacity: 0; visibility: hidden; transition: .25s; }
-    .modal.open { opacity: 1; visibility: visible; }
-    .animation-card { position: relative; width: 100%; max-width: 400px; overflow: hidden; border: 4px solid #fff; border-radius: 27px; background: linear-gradient(180deg,#fffdf4,#fff); box-shadow: 0 24px 70px rgba(25,19,62,.3); transform: scale(.9); transition: .3s; }
-    .modal.open .animation-card { transform: scale(1); }
-    .close-button { position: absolute; z-index: 5; right: 11px; top: 10px; display: grid; width: 34px; height: 34px; place-items: center; border-radius: 11px; color: #77718a; background: rgba(255,255,255,.9); box-shadow: 0 3px 10px rgba(62,50,120,.1); font-size: 24px; line-height: 1; }
-    .animation-title { padding: 18px 48px 8px 20px; color: #4d456d; text-align: center; font-size: 19px; font-weight: 900; }
-    .animation-subtitle { margin: 0 15px 5px; color: #9a7180; text-align: center; font-size: 11px; }
-    .apple-stage { position: relative; height: 245px; margin: 5px 12px 0; overflow: hidden; border-radius: 21px; background: linear-gradient(145deg,#ebe6ff,#fff1b5); }
-    .group { position: absolute; top: 47px; display: grid; grid-template-columns: repeat(2,43px); justify-items: center; gap: 4px; width: 92px; transition: transform .8s ease; }
-    .group.left { left: 24px; }.group.right { right: 24px; }
-    .apple { display: block; font-size: 36px; font-style: normal; filter: drop-shadow(0 4px 3px rgba(102,67,42,.15)); opacity: 0; transform: translateY(-22px) scale(.5); }
-    .apple:nth-child(3) { grid-column: 1/3; }
-    .plus { position: absolute; left: 50%; top: 71px; color: var(--purple-dark); font-size: 34px; font-weight: 900; opacity: 0; transform: translateX(-50%) scale(.5); }
-    .result-apples { position: absolute; left: 50%; top: 35px; display: grid; grid-template-columns: repeat(3,46px); justify-items: center; gap: 7px 5px; opacity: 0; transform: translateX(-50%) scale(.7); }
-    .result-apples i { font-size: 38px; font-style: normal; filter: drop-shadow(0 4px 3px rgba(102,67,42,.15)); }
-    .equation { position: absolute; left: 50%; bottom: 17px; width: max-content; padding: 8px 16px; border-radius: 999px; color: #fff; background: var(--purple); box-shadow: 0 7px 16px rgba(83,70,203,.23); font-size: 17px; font-weight: 900; opacity: 0; transform: translate(-50%,12px); }
-    .stage-label { position: absolute; bottom: 58px; width: 100%; color: #7f788f; text-align: center; font-size: 12px; opacity: 0; }
-    .apple-stage.playing .group .apple { animation: appleAppear .42s ease forwards; }
-    .apple-stage.playing .group .apple:nth-child(2){animation-delay:.2s}.apple-stage.playing .group .apple:nth-child(3){animation-delay:.4s}
-    .apple-stage.playing .group.right .apple:nth-child(1){animation-delay:.7s}.apple-stage.playing .group.right .apple:nth-child(2){animation-delay:.9s}.apple-stage.playing .group.right .apple:nth-child(3){animation-delay:1.1s}
-    .apple-stage.playing .plus { animation: pop .35s 1.35s ease forwards; }
-    .apple-stage.playing .group.left { animation: mergeLeft .7s 2s ease forwards, hideGroup .3s 2.75s forwards; }
-    .apple-stage.playing .group.right { animation: mergeRight .7s 2s ease forwards, hideGroup .3s 2.75s forwards; }
-    .apple-stage.playing .plus { animation: pop .35s 1.35s ease forwards, fadeOut .25s 2.6s forwards; }
-    .apple-stage.playing .result-apples { animation: resultShow .55s 2.9s ease forwards; }
-    .apple-stage.playing .stage-label { animation: fadeIn .35s 3.35s forwards; }
-    .apple-stage.playing .equation { animation: equationShow .45s 3.65s ease forwards; }
-    @keyframes appleAppear { to { opacity:1; transform:translateY(0) scale(1); } }
-    @keyframes pop { 70%{opacity:1;transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)} }
-    @keyframes mergeLeft { to { transform:translateX(64px) scale(.86); } }
-    @keyframes mergeRight { to { transform:translateX(-64px) scale(.86); } }
-    @keyframes hideGroup { to { opacity:0; } }
-    @keyframes fadeOut { to { opacity:0; } }
-    @keyframes resultShow { 0%{opacity:0;transform:translateX(-50%) scale(.6)}70%{opacity:1;transform:translateX(-50%) scale(1.12)}100%{opacity:1;transform:translateX(-50%) scale(1)} }
-    @keyframes fadeIn { to { opacity:1; } }
-    @keyframes equationShow { to { opacity:1;transform:translate(-50%,0); } }
-    .conclusion { margin: 12px 17px 8px; padding: 10px 12px; border-radius: 14px; color: #5e5675; background: #f5f2ff; text-align: center; font-size: 13px; font-weight: 800; line-height: 1.6; opacity: 0; transform: translateY(8px); transition: .35s; }
-    .conclusion.show { opacity: 1; transform: translateY(0); }
-    .animation-actions { display: grid; grid-template-columns: .9fr 1.45fr; gap: 8px; padding: 7px 15px 15px; }
-    .replay-button { padding: 12px 8px; border: 2px solid #dad5fb; border-radius: 14px; color: #5a50bd; background: #fff; font-size: 12px; font-weight: 900; }
-    .game-button { padding: 12px 8px; border-radius: 14px; color: #fff; background: linear-gradient(135deg,#65d3b2,#3cb18f); box-shadow: 0 7px 15px rgba(47,166,132,.22); font-size: 12px; font-weight: 900; opacity: 0; visibility: hidden; transform: translateY(7px); transition: .35s; }
-    .game-button.show { opacity: 1; visibility: visible; transform: translateY(0); }
-    .toast { position: absolute; z-index: 50; left: 50%; bottom: max(25px,env(safe-area-inset-bottom)); max-width: 88%; padding: 10px 14px; border-radius: 11px; color: #fff; background: rgba(43,39,61,.93); opacity: 0; pointer-events: none; transform: translate(-50%,15px); transition: .25s; font-size: 12px; white-space: nowrap; }.toast.show{opacity:1;transform:translate(-50%,0)}
-
-    @media (min-width:560px){body{padding:18px 0}.app{height:calc(100dvh - 36px);border:7px solid #2d2947;border-radius:31px}}
-    @media (max-height:690px){.tag{padding-block:5px}.welcome h1{margin-top:8px;font-size:37px}.mascot-stage{height:228px;margin-top:-17px;transform:scale(.82)}.welcome>p{margin-bottom:0}.apple-stage{height:215px}.animation-title{padding-top:13px}.conclusion{margin-top:8px}}
-    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;scroll-behavior:auto!important}}
+    .header{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:70px;
+      padding:max(11px,env(safe-area-inset-top)) 13px 11px;
+      color:#fff;
+      background:linear-gradient(135deg,#7166ee,#887efb);
+      box-shadow:0 5px 17px rgba(76,62,179,.2);
+    }
+    .back-top{
+      display:grid;
+      grid-template-columns:auto auto;
+      align-items:center;
+      gap:2px;
+      flex:0 0 auto;
+      padding:8px 10px 8px 7px;
+      border:1px solid rgba(255,255,255,.42);
+      border-radius:12px;
+      color:#fff;
+      background:rgba(255,255,255,.14);
+      font-size:11px;
+      font-weight:800;
+    }
+    .back-top b{font-size:23px;line-height:14px}
+    .avatar{width:43px;height:43px;overflow:hidden;border:2px solid rgba(255,255,255,.75);border-radius:14px;background:#fff}
+    .avatar img{width:100%;height:100%;object-fit:cover;object-position:center 39%}
+    .header-copy{flex:1;min-width:0}.header h1{margin:0;font-size:17px}.header p{margin:3px 0 0;font-size:10px;opacity:.86}
+    .content{height:calc(100% - 70px);overflow-y:auto;padding:15px 16px max(20px,env(safe-area-inset-bottom));}
+    .teacher-tip{display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;padding:10px 12px;border:1px solid #e3defd;border-radius:16px;background:rgba(255,255,255,.9);box-shadow:0 6px 16px rgba(68,53,143,.07)}
+    .teacher-tip img{width:38px;height:38px;object-fit:cover;object-position:center 39%;border-radius:12px}
+    .teacher-tip p{margin:0;font-size:13px;line-height:1.65}
+    .card{overflow:hidden;border:4px solid #fff;border-radius:26px;background:#fff;box-shadow:var(--shadow)}
+    .title{padding:16px 45px 6px;text-align:center;font-size:19px;font-weight:900}
+    .subtitle{margin:0 15px 7px;color:var(--muted);text-align:center;font-size:11px}
+    .stage{position:relative;height:270px;margin:5px 12px 0;overflow:hidden;border-radius:21px;background:linear-gradient(145deg,#e9e4ff,#fff0ad)}
+    .group{position:absolute;top:48px;display:grid;grid-template-columns:repeat(2,45px);justify-items:center;gap:4px;width:96px;transition:transform .8s ease}
+    .group.left{left:24px}.group.right{right:24px}
+    .apple{display:block;font-size:38px;font-style:normal;filter:drop-shadow(0 4px 3px rgba(102,67,42,.16));opacity:0;transform:translateY(-23px) scale(.5)}
+    .apple:nth-child(3){grid-column:1/3}
+    .plus{position:absolute;left:50%;top:74px;color:var(--purple-dark);font-size:35px;font-weight:900;opacity:0;transform:translateX(-50%) scale(.5)}
+    .result{position:absolute;left:50%;top:35px;display:grid;grid-template-columns:repeat(3,48px);justify-items:center;gap:8px 5px;opacity:0;transform:translateX(-50%) scale(.7)}
+    .result i{font-size:39px;font-style:normal;filter:drop-shadow(0 4px 3px rgba(102,67,42,.16))}
+    .count{position:absolute;left:50%;bottom:72px;display:flex;gap:6px;transform:translateX(-50%);opacity:0}
+    .count i{display:grid;width:25px;height:25px;place-items:center;border-radius:50%;color:#fff;background:var(--purple);font-size:11px;font-style:normal;font-weight:900;opacity:.35}
+    .equation{position:absolute;left:50%;bottom:18px;width:max-content;padding:9px 18px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#7d71f8,#574bd0);box-shadow:0 7px 16px rgba(83,70,203,.23);font-size:18px;font-weight:900;opacity:0;transform:translate(-50%,12px)}
+    .stage.playing .group .apple{animation:appleIn .42s ease forwards}
+    .stage.playing .group .apple:nth-child(2){animation-delay:.2s}.stage.playing .group .apple:nth-child(3){animation-delay:.4s}
+    .stage.playing .group.right .apple:nth-child(1){animation-delay:.7s}.stage.playing .group.right .apple:nth-child(2){animation-delay:.9s}.stage.playing .group.right .apple:nth-child(3){animation-delay:1.1s}
+    .stage.playing .plus{animation:pop .35s 1.35s ease forwards,fade .25s 2.65s forwards}
+    .stage.playing .group.left{animation:mergeLeft .75s 1.95s ease forwards,fade .3s 2.72s forwards}
+    .stage.playing .group.right{animation:mergeRight .75s 1.95s ease forwards,fade .3s 2.72s forwards}
+    .stage.playing .result{animation:resultIn .55s 2.9s ease forwards}
+    .stage.playing .count{animation:show .25s 3.3s forwards}
+    .stage.playing .count i{animation:countPop .35s ease forwards}.stage.playing .count i:nth-child(1){animation-delay:3.35s}.stage.playing .count i:nth-child(2){animation-delay:3.55s}.stage.playing .count i:nth-child(3){animation-delay:3.75s}.stage.playing .count i:nth-child(4){animation-delay:3.95s}.stage.playing .count i:nth-child(5){animation-delay:4.15s}.stage.playing .count i:nth-child(6){animation-delay:4.35s}
+    .stage.playing .equation{animation:equationIn .45s 4.55s ease forwards}
+    @keyframes appleIn{to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes pop{70%{opacity:1;transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+    @keyframes mergeLeft{to{transform:translateX(65px) scale(.86)}}@keyframes mergeRight{to{transform:translateX(-65px) scale(.86)}}
+    @keyframes fade{to{opacity:0}}@keyframes show{to{opacity:1}}
+    @keyframes resultIn{0%{opacity:0;transform:translateX(-50%) scale(.6)}70%{opacity:1;transform:translateX(-50%) scale(1.12)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+    @keyframes countPop{60%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:scale(1);background:#ff8663}}
+    @keyframes equationIn{to{opacity:1;transform:translate(-50%,0)}}
+    .conclusion{margin:12px 16px 8px;padding:11px 12px;border-radius:14px;color:#5c5573;background:#f3f0ff;text-align:center;font-size:13px;font-weight:800;line-height:1.65;opacity:0;transform:translateY(8px);transition:.35s}
+    .conclusion.show{opacity:1;transform:translateY(0)}
+    .actions{display:grid;grid-template-columns:.9fr 1.25fr;gap:8px;padding:7px 15px 15px;opacity:0;transform:translateY(8px);transition:.35s}
+    .actions.show{opacity:1;transform:translateY(0)}
+    .replay{padding:13px 8px;border:2px solid #dcd7fb;border-radius:14px;color:#584fba;background:#fff;font-size:12px;font-weight:900}
+    .return-button{padding:13px 8px;border-radius:14px;color:#fff;background:linear-gradient(135deg,#6ed9ba,#3caf8d);box-shadow:0 7px 15px rgba(47,166,132,.22);font-size:12px;font-weight:900}
+    .footer-note{margin:10px 0 0;color:#9c97aa;text-align:center;font-size:9px}
+    @media(min-width:560px){body{padding:18px 0}.app{height:calc(100dvh - 36px);border:7px solid #2d2947;border-radius:31px}}
+    @media(max-height:680px){.content{padding-top:9px}.teacher-tip{margin-bottom:7px;padding-block:7px}.stage{height:225px}.group{top:31px}.plus{top:56px}.result{top:22px}.title{padding-top:10px}.conclusion{margin-top:7px;padding-block:7px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important}}
   </style>
 </head>
 <body>
   <main class="app">
-    <section id="welcomeScreen" class="screen welcome active">
-      <div class="tag">快乐思考 · 趣味数学</div>
-      <h1>你好，我是<span>数小嘉</span></h1>
-      <p>你的幼儿数学启蒙小伙伴</p>
-      <div class="mascot-stage" aria-label="数小嘉博士男孩卡通形象">
-        <span class="spark one">✦</span><span class="spark two">✦</span>
-        <img class="mascot-image" src="shuxiaojia.png" alt="戴着博士帽的数小嘉">
-      </div>
-      <button id="startButton" class="start-button" type="button">开始数学探险 🚀</button>
-      <small>点击开始，和数小嘉一起学数学</small>
-    </section>
-
-    <section id="chatScreen" class="screen chat">
-      <header class="header">
-        <div class="mini-avatar"><img src="shuxiaojia.png" alt="数小嘉头像"></div>
-        <div class="header-copy"><h2>数小嘉数学小课堂</h2><p>数小嘉在线</p></div>
-        <button id="restartButton" class="restart-button" type="button">↻ 重新开始</button>
-      </header>
-      <div id="messages" class="messages" aria-live="polite">
-        <div class="date">今天</div>
-      </div>
-      <section class="quick-panel">
-        <p>✨ 点一点，快速提问</p>
-        <div class="quick-list">
-          <button class="quick-button" type="button">三加三等于几？</button>
-          <button class="quick-button" type="button">我还是有一点听不明白，你能再形象具体一点吗？</button>
-          <button class="quick-button" type="button">5-2等于几？</button>
-          <button class="quick-button" type="button">7+1等于几？</button>
-        </div>
-      </section>
-      <form id="questionForm" class="input-bar">
-        <input id="questionInput" type="text" autocomplete="off" placeholder="输入十以内加减法…" aria-label="输入问题">
-        <button class="send-button" type="submit">发送</button>
-      </form>
-    </section>
-
-    <section id="gameScreen" class="screen game-screen" aria-labelledby="gameTitle">
-      <header class="game-header">
-        <button id="backFromGameButton" class="game-nav" type="button" aria-label="返回">‹</button>
-        <h2 id="gameTitle">⭐ 星星加减乐园 ⭐</h2>
-        <button id="resetGameButton" class="game-nav" type="button" aria-label="重新开始游戏">↻</button>
-      </header>
-      <div class="game-body">
-        <div class="game-top">
-          <div id="roundDots" class="round-dots" aria-label="游戏进度"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="jar-wrap" aria-label="星星瓶">
-            <div class="jar-cap"></div><div class="jar-neck"></div><div id="starJar" class="jar"></div>
-          </div>
-        </div>
-        <div class="game-card">
-          <div id="objectScene" class="object-scene"></div>
-          <div id="gameQuestion" class="game-question">3 ＋ 3 ＝ ?</div>
-          <div id="answerGrid" class="answer-grid"></div>
-          <div id="gameFeedback" class="mini-feedback" aria-live="polite"></div>
-          <div id="gameFinish" class="game-finish">
-            <div class="trophy">🏆</div><div id="finishStars" class="finish-stars">⭐⭐⭐⭐⭐</div>
-            <h3 id="finishText">挑战完成！</h3>
-            <button id="playAgainButton" type="button">再玩一次</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div id="animationModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="animationTitle">
-      <div class="animation-card">
-        <button id="closeAnimationButton" class="close-button" type="button" aria-label="关闭动画">×</button>
-        <div id="animationTitle" class="animation-title">我们用苹果来理解 3＋3</div>
-        <p class="animation-subtitle">认真看，两组苹果要集合啦！</p>
-        <div id="appleStage" class="apple-stage">
+    <header class="header">
+      <button class="back-top return-to-coze" type="button"><b>‹</b><span>返回</span></button>
+      <div class="avatar"><img src="shuxiaojia.png" alt="数小嘉"></div>
+      <div class="header-copy"><h1>数小嘉动画小课堂</h1><p>用苹果看懂 3＋3</p></div>
+    </header>
+    <section class="content">
+      <div class="teacher-tip"><img src="shuxiaojia.png" alt="数小嘉"><p>没关系，我们把两组苹果放在一起，慢慢数一数吧！</p></div>
+      <article class="card">
+        <div class="title">我们用苹果来理解 3＋3</div>
+        <p class="subtitle">三颗红苹果，加上三颗绿苹果</p>
+        <div id="stage" class="stage">
           <div class="group left"><i class="apple">🍎</i><i class="apple">🍎</i><i class="apple">🍎</i></div>
           <div class="plus">＋</div>
           <div class="group right"><i class="apple">🍏</i><i class="apple">🍏</i><i class="apple">🍏</i></div>
-          <div class="result-apples"><i>🍎</i><i>🍎</i><i>🍎</i><i>🍏</i><i>🍏</i><i>🍏</i></div>
-          <div class="stage-label">合在一起，一共有 6 个苹果！</div>
+          <div class="result"><i>🍎</i><i>🍎</i><i>🍎</i><i>🍏</i><i>🍏</i><i>🍏</i></div>
+          <div class="count"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i></div>
           <div class="equation">3 ＋ 3 ＝ 6</div>
         </div>
         <div id="conclusion" class="conclusion">3 个苹果＋3 个苹果＝6 个苹果，所以 3＋3＝6。</div>
-        <div class="animation-actions">
-          <button id="replayButton" class="replay-button" type="button">↻ 重新播放</button>
-          <button id="goGameButton" class="game-button" type="button">我明白了，去玩加法小游戏 🎮</button>
+        <div id="actions" class="actions">
+          <button id="replayButton" class="replay" type="button">↻ 重新播放</button>
+          <button class="return-button return-to-coze" type="button">返回数小嘉</button>
         </div>
-      </div>
-    </div>
-    <div id="toast" class="toast" role="status"></div>
+      </article>
+      <p class="footer-note">动画结束后可重新播放，或返回扣子继续对话</p>
+    </section>
   </main>
-
   <script>
-    // 本地小游戏直达地址，部署后扣子可发送：index.html?view=game
-    const gameUrl = "?view=game";
+    // 扣子公开体验地址。无法返回上一页时，会打开此链接。
+    const COZE_URL = "https://www.coze.cn/store/agent/7653366365516185650?bot_id=true";
 
-    const welcomeScreen = document.getElementById("welcomeScreen");
-    const chatScreen = document.getElementById("chatScreen");
-    const gameScreen = document.getElementById("gameScreen");
-    const messages = document.getElementById("messages");
-    const input = document.getElementById("questionInput");
-    const modal = document.getElementById("animationModal");
-    const appleStage = document.getElementById("appleStage");
+    const stage = document.getElementById("stage");
     const conclusion = document.getElementById("conclusion");
-    const gameButton = document.getElementById("goGameButton");
-    const toast = document.getElementById("toast");
-    let replyTimer = null;
-    let animationTimer = null;
-    let toastTimer = null;
-    let currentAnswer = "";
-    let gameRound = 0;
-    let gameScore = 0;
-    let gameAnswer = 0;
-    let answerLocked = false;
-    let nextQuestionTimer = null;
-    let gameAudioContext = null;
+    const actions = document.getElementById("actions");
+    let finishTimer;
 
-    const numberMap = {"零":0,"一":1,"二":2,"两":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9,"十":10};
-    const numberText = ["零","一","二","三","四","五","六","七","八","九","十"];
-
-    function showToast(text) {
-      toast.textContent = text;
-      toast.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 2300);
+    function playAnimation(){
+      clearTimeout(finishTimer);
+      stage.classList.remove("playing");
+      conclusion.classList.remove("show");
+      actions.classList.remove("show");
+      void stage.offsetWidth;
+      stage.classList.add("playing");
+      finishTimer=setTimeout(()=>{
+        conclusion.classList.add("show");
+        actions.classList.add("show");
+      },5050);
     }
 
-    function speak(text) {
-      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
-        showToast("当前浏览器不支持语音播报，请阅读文字回答哦。");
+    function returnToCoze(){
+      clearTimeout(finishTimer);
+      const cameFromCoze = /(^|\.)coze\.cn$/i.test(document.referrer ? new URL(document.referrer).hostname : "");
+      if(cameFromCoze && history.length>1){
+        history.back();
         return;
       }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "zh-CN";
-      utterance.rate = .86;
-      utterance.pitch = 1.12;
-      const voice = window.speechSynthesis.getVoices().find(item => /^zh[-_]/i.test(item.lang));
-      if (voice) utterance.voice = voice;
-      utterance.onerror = () => showToast("语音没有成功播放，请点击“再听一遍”。");
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function scrollBottom() { requestAnimationFrame(() => messages.scrollTop = messages.scrollHeight); }
-
-    function addMessage(text, role, withActions) {
-      const row = document.createElement("div");
-      row.className = "message " + (role === "user" ? "user" : "bot");
-      if (role !== "user") {
-        const avatar = document.createElement("div");
-        avatar.className = "chat-avatar";
-        avatar.innerHTML = '<img src="shuxiaojia.png" alt="数小嘉">';
-        row.appendChild(avatar);
+      if(window.opener){
+        window.close();
+        setTimeout(()=>{window.location.href=COZE_URL},350);
+        return;
       }
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      const copy = document.createElement("div");
-      copy.textContent = text;
-      bubble.appendChild(copy);
-      if (withActions) {
-        const actions = document.createElement("div");
-        actions.className = "bubble-actions";
-        const voiceButton = document.createElement("button");
-        voiceButton.type = "button";
-        voiceButton.textContent = "🔊 再听一遍";
-        voiceButton.addEventListener("click", () => speak(text));
-        actions.appendChild(voiceButton);
-        if (/动画|苹果/.test(text)) {
-          const animationButton = document.createElement("button");
-          animationButton.type = "button";
-          animationButton.className = "animation-link";
-          animationButton.textContent = "🍎 打开苹果动画";
-          animationButton.addEventListener("click", openAnimation);
-          actions.appendChild(animationButton);
-        }
-        bubble.appendChild(actions);
-      }
-      row.appendChild(bubble);
-      messages.appendChild(row);
-      scrollBottom();
+      window.location.href=COZE_URL;
     }
 
-    function showTyping() {
-      const row = document.createElement("div");
-      row.id = "typingRow";
-      row.className = "message bot";
-      row.innerHTML = '<div class="chat-avatar"><img src="shuxiaojia.png" alt="数小嘉"></div><div class="bubble typing"><i></i><i></i><i></i></div>';
-      messages.appendChild(row);
-      scrollBottom();
-    }
-
-    function parseMath(text) {
-      let clean = text.replace(/\s+/g, "").replace(/[？?。！!]/g, "");
-      Object.entries(numberMap).sort((a,b) => b[0].length-a[0].length).forEach(([word,num]) => clean = clean.replaceAll(word,String(num)));
-      clean = clean.replaceAll("加上","+").replaceAll("加","+").replaceAll("减去","-").replaceAll("减","-").replaceAll("＋","+").replaceAll("－","-");
-      const match = clean.match(/(?:^|[^0-9])(10|[0-9])([+-])(10|[0-9])(?:等于|=)?(?:几|多少)?(?:$|[^0-9])/);
-      if (!match) return null;
-      const a = Number(match[1]);
-      const b = Number(match[3]);
-      const operator = match[2];
-      const result = operator === "+" ? a+b : a-b;
-      return {a,b,operator,result,valid:a<=10&&b<=10&&result>=0&&result<=10};
-    }
-
-    function createReply(question) {
-      if (/(听不明白|没听懂|不明白|形象|具体|动画|讲解|再讲)/.test(question)) {
-        return {text:"当然可以，我们用苹果动画来看一看。", animation:true};
-      }
-      const math = parseMath(question);
-      if (!math) return {text:"数小嘉现在会回答十以内的加减法。你可以问我“三加三等于几”哦！"};
-      if (!math.valid) return {text:"这道题超出十以内啦！我们换一道结果在零到十之间的加减法吧。"};
-      return {text:`${numberText[math.a]}${math.operator === "+" ? "加" : "减"}${numberText[math.b]}等于${numberText[math.result]}。`};
-    }
-
-    function ask(question) {
-      const text = question.trim();
-      if (!text) return;
-      addMessage(text,"user",false);
-      input.value = "";
-      showTyping();
-      const reply = createReply(text);
-      currentAnswer = reply.text;
-      clearTimeout(replyTimer);
-      replyTimer = setTimeout(() => {
-        document.getElementById("typingRow")?.remove();
-        addMessage(reply.text,"bot",true);
-        speak(reply.text);
-        if (reply.animation) setTimeout(openAnimation,900);
-      },620);
-    }
-
-    function playAnimation() {
-      clearTimeout(animationTimer);
-      appleStage.classList.remove("playing");
-      conclusion.classList.remove("show");
-      gameButton.classList.remove("show");
-      void appleStage.offsetWidth;
-      appleStage.classList.add("playing");
-      animationTimer = setTimeout(() => {
-        conclusion.classList.add("show");
-        gameButton.classList.add("show");
-        speak("三颗红苹果，加上三颗绿苹果，一共有六颗苹果。所以，三加三等于六。");
-      },4100);
-    }
-
-    function openAnimation() {
-      modal.classList.add("open");
-      playAnimation();
-    }
-
-    function closeAnimation() {
-      clearTimeout(animationTimer);
-      modal.classList.remove("open");
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-    }
-
-    function makeGameQuestion() {
-      const isAddition = Math.random() < .58;
-      let a, b, result;
-      if (isAddition) {
-        a = 1 + Math.floor(Math.random()*8);
-        b = 1 + Math.floor(Math.random()*(10-a));
-        result = a+b;
-      } else {
-        a = 2 + Math.floor(Math.random()*9);
-        b = 1 + Math.floor(Math.random()*a);
-        result = a-b;
-      }
-      return {a,b,result,operator:isAddition?"+":"-"};
-    }
-
-    function makeChoices(answer) {
-      const values = new Set([answer]);
-      while (values.size<3) {
-        const value = Math.max(0,Math.min(10,answer+Math.floor(Math.random()*7)-3));
-        values.add(value);
-      }
-      return [...values].sort(()=>Math.random()-.5);
-    }
-
-    function renderObjectScene(question) {
-      const scene = document.getElementById("objectScene");
-      scene.innerHTML = "";
-      const first = document.createElement("div");
-      first.className = "object-group";
-      let removedIndex=0;
-      for(let i=0;i<question.a;i++) {
-        const item = document.createElement("i");
-        item.textContent = question.operator==="+"?"🍎":"⭐";
-        if(question.operator==="-" && i>=question.a-question.b) {
-          item.className="removed";
-          item.style.animationDelay=(.8+removedIndex*.28)+"s";
-          removedIndex++;
-        }
-        first.appendChild(item);
-      }
-      const sign = document.createElement("b");
-      sign.className = "scene-sign";
-      sign.textContent = question.operator==="+"?"＋":"－";
-      scene.append(first,sign);
-      if(question.operator==="+") {
-        const second = document.createElement("div");
-        second.className = "object-group";
-        for(let i=0;i<question.b;i++) {
-          const item = document.createElement("i");
-          item.textContent="🍏";
-          second.appendChild(item);
-        }
-        scene.appendChild(second);
-      } else {
-        const hint = document.createElement("div");
-        hint.className="object-group";
-        hint.style.fontSize="30px";
-        hint.textContent="💨";
-        scene.appendChild(hint);
-      }
-    }
-
-    function updateRoundDots() {
-      document.querySelectorAll("#roundDots i").forEach((dot,index)=>{
-        dot.className = index<gameRound?"done":(index===gameRound?"current":"");
-      });
-    }
-
-    function renderGameQuestion() {
-      answerLocked=false;
-      const feedback=document.getElementById("gameFeedback");
-      feedback.textContent="";
-      feedback.classList.remove("pop");
-      const question=makeGameQuestion();
-      gameAnswer=question.result;
-      updateRoundDots();
-      renderObjectScene(question);
-      const questionBox=document.getElementById("gameQuestion");
-      questionBox.textContent=`${question.a} ${question.operator==="+"?"＋":"－"} ${question.b} ＝ ?`;
-      questionBox.style.animation="none";
-      void questionBox.offsetWidth;
-      questionBox.style.animation="";
-      const grid=document.getElementById("answerGrid");
-      grid.innerHTML="";
-      makeChoices(gameAnswer).forEach(value=>{
-        const button=document.createElement("button");
-        button.type="button";
-        button.className="answer-choice";
-        button.textContent=value;
-        button.addEventListener("click",()=>checkGameAnswer(value,button));
-        grid.appendChild(button);
-      });
-    }
-
-    function dropStarIntoJar() {
-      const star=document.createElement("span");
-      star.className="bottle-star dropping";
-      const positions=[{l:12,b:8},{l:47,b:9},{l:27,b:34},{l:60,b:37},{l:42,b:61}];
-      const spot=positions[Math.min(gameScore-1,4)];
-      star.style.left=spot.l+"px";
-      star.style.bottom=spot.b+"px";
-      const jar=document.getElementById("starJar");
-      jar.appendChild(star);
-      jar.classList.remove("sparkle");
-      void jar.offsetWidth;
-      jar.classList.add("sparkle");
-    }
-
-    function playGameSound(type) {
-      try {
-        gameAudioContext = gameAudioContext || new (window.AudioContext || window.webkitAudioContext)();
-        if(gameAudioContext.state==="suspended")gameAudioContext.resume();
-        const patterns = {
-          correct:[{f:523,t:0},{f:659,t:.1},{f:784,t:.2}],
-          wrong:[{f:392,t:0},{f:330,t:.16}],
-          finish:[{f:523,t:0},{f:659,t:.11},{f:784,t:.22},{f:1047,t:.36}]
-        };
-        const now=gameAudioContext.currentTime;
-        (patterns[type]||patterns.correct).forEach(note=>{
-          const oscillator=gameAudioContext.createOscillator();
-          const gain=gameAudioContext.createGain();
-          oscillator.type=type==="wrong"?"sine":"triangle";
-          oscillator.frequency.setValueAtTime(note.f,now+note.t);
-          gain.gain.setValueAtTime(.0001,now+note.t);
-          gain.gain.exponentialRampToValueAtTime(type==="wrong"?.025:.045,now+note.t+.025);
-          gain.gain.exponentialRampToValueAtTime(.0001,now+note.t+.22);
-          oscillator.connect(gain).connect(gameAudioContext.destination);
-          oscillator.start(now+note.t);
-          oscillator.stop(now+note.t+.24);
-        });
-      } catch {}
-    }
-
-    function checkGameAnswer(value,selected) {
-      if(answerLocked)return;
-      answerLocked=true;
-      const feedback=document.getElementById("gameFeedback");
-      document.querySelectorAll("#answerGrid button").forEach(button=>{
-        button.disabled=true;
-        if(Number(button.textContent)===gameAnswer)button.classList.add("correct");
-      });
-      if(value===gameAnswer) {
-        gameScore++;
-        dropStarIntoJar();
-        feedback.innerHTML="<span>🌟</span> 太棒啦！";
-        playGameSound("correct");
-      } else {
-        selected.classList.add("wrong");
-        feedback.innerHTML="<span>💛</span> 再数一数";
-        playGameSound("wrong");
-      }
-      feedback.classList.add("pop");
-      gameRound++;
-      clearTimeout(nextQuestionTimer);
-      nextQuestionTimer=setTimeout(()=>{
-        if(gameRound>=5)finishGame();else renderGameQuestion();
-      },1250);
-    }
-
-    function finishGame() {
-      updateRoundDots();
-      const starText="⭐".repeat(gameScore)||"💛";
-      document.getElementById("finishStars").textContent=starText;
-      document.getElementById("finishText").textContent=gameScore===5?"满瓶啦！":"收集了 "+gameScore+" 颗星";
-      document.getElementById("gameFinish").classList.add("show");
-      for(let i=0;i<18;i++) {
-        const confetti=document.createElement("i");
-        confetti.className="confetti";
-        confetti.style.left=(Math.random()*100)+"%";
-        confetti.style.animationDelay=(Math.random()*.7)+"s";
-        document.querySelector(".game-body").appendChild(confetti);
-        setTimeout(()=>confetti.remove(),2600);
-      }
-      playGameSound("finish");
-    }
-
-    function startLocalGame() {
-      clearTimeout(nextQuestionTimer);
-      if("speechSynthesis" in window)window.speechSynthesis.cancel();
-      modal.classList.remove("open");
-      welcomeScreen.classList.remove("active");
-      chatScreen.classList.remove("active");
-      gameScreen.classList.add("active");
-      gameRound=0;
-      gameScore=0;
-      document.getElementById("starJar").querySelectorAll(".bottle-star").forEach(star=>star.remove());
-      document.getElementById("gameFinish").classList.remove("show");
-      renderGameQuestion();
-    }
-
-    function leaveGame() {
-      clearTimeout(nextQuestionTimer);
-      gameScreen.classList.remove("active");
-      chatScreen.classList.add("active");
-    }
-
-    function resetDemo() {
-      clearTimeout(replyTimer);
-      clearTimeout(animationTimer);
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-      messages.innerHTML = '<div class="date">今天</div>';
-      modal.classList.remove("open");
-      gameScreen.classList.remove("active");
-      chatScreen.classList.remove("active");
-      welcomeScreen.classList.add("active");
-    }
-
-    document.getElementById("startButton").addEventListener("click", () => {
-      welcomeScreen.classList.remove("active");
-      chatScreen.classList.add("active");
-      setTimeout(() => {
-        const greeting = "小朋友你好呀！我是数小嘉博士。你可以问我十以内的加减法。";
-        addMessage(greeting,"bot",true);
-        speak(greeting);
-      },350);
-    });
-    document.getElementById("restartButton").addEventListener("click",resetDemo);
-    document.getElementById("questionForm").addEventListener("submit",event => {event.preventDefault();ask(input.value)});
-    document.querySelectorAll(".quick-button").forEach(button => button.addEventListener("click",() => ask(button.textContent)));
     document.getElementById("replayButton").addEventListener("click",playAnimation);
-    document.getElementById("closeAnimationButton").addEventListener("click",closeAnimation);
-    modal.addEventListener("click",event => {if(event.target===modal)closeAnimation()});
-    document.getElementById("goGameButton").addEventListener("click",startLocalGame);
-    document.getElementById("backFromGameButton").addEventListener("click",leaveGame);
-    document.getElementById("resetGameButton").addEventListener("click",startLocalGame);
-    document.getElementById("playAgainButton").addEventListener("click",startLocalGame);
-    if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
-
-    // 扣子直达入口：部署后可使用 index.html?view=animation 或 index.html?view=game
-    const directView = new URLSearchParams(window.location.search).get("view");
-    if (directView === "animation") {
-      welcomeScreen.classList.remove("active");
-      chatScreen.classList.add("active");
-      const directReply = "当然可以，我们用苹果动画来看一看。";
-      addMessage(directReply,"bot",true);
-      setTimeout(() => {
-        speak(directReply);
-        openAnimation();
-      },350);
-    }
-    if (directView === "game") {
-      startLocalGame();
-    }
+    document.querySelectorAll(".return-to-coze").forEach(button=>button.addEventListener("click",returnToCoze));
+    window.addEventListener("pageshow",playAnimation);
   </script>
 </body>
 </html>
