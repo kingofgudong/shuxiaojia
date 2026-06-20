@@ -73,7 +73,12 @@
     .teacher-tip{display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;padding:10px 12px;border:1px solid #e3defd;border-radius:16px;background:rgba(255,255,255,.9);box-shadow:0 6px 16px rgba(68,53,143,.07)}
     .teacher-tip img{width:38px;height:38px;object-fit:cover;object-position:center 39%;border-radius:12px}
     .teacher-tip p{margin:0;font-size:13px;line-height:1.65}
-    .card{overflow:hidden;border:4px solid #fff;border-radius:26px;background:#fff;box-shadow:var(--shadow)}
+    .card{position:relative;overflow:hidden;border:4px solid #fff;border-radius:26px;background:#fff;box-shadow:var(--shadow)}
+    .start-panel{position:absolute;z-index:20;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:25px;background:linear-gradient(160deg,rgba(239,235,255,.97),rgba(255,247,210,.97));text-align:center;transition:.35s}
+    .start-panel.hide{opacity:0;visibility:hidden;transform:scale(1.05)}
+    .start-panel img{width:92px;height:92px;object-fit:cover;object-position:center 39%;border:5px solid #fff;border-radius:28px;box-shadow:0 10px 22px rgba(63,51,143,.18)}
+    .start-panel h2{margin:2px 0 0;font-size:19px}.start-panel p{margin:0;color:var(--muted);font-size:11px}
+    .start-panel button{padding:13px 28px;border-radius:16px;color:#fff;background:linear-gradient(135deg,#7e72f8,#574bd0);box-shadow:0 9px 19px rgba(77,63,199,.25);font-weight:900}
     .title{padding:16px 45px 6px;text-align:center;font-size:19px;font-weight:900}
     .subtitle{margin:0 15px 7px;color:var(--muted);text-align:center;font-size:11px}
     .stage{position:relative;height:270px;margin:5px 12px 0;overflow:hidden;border-radius:21px;background:linear-gradient(145deg,#e9e4ff,#fff0ad)}
@@ -87,16 +92,16 @@
     .count{position:absolute;left:50%;bottom:72px;display:flex;gap:6px;transform:translateX(-50%);opacity:0}
     .count i{display:grid;width:25px;height:25px;place-items:center;border-radius:50%;color:#fff;background:var(--purple);font-size:11px;font-style:normal;font-weight:900;opacity:.35}
     .equation{position:absolute;left:50%;bottom:18px;width:max-content;padding:9px 18px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#7d71f8,#574bd0);box-shadow:0 7px 16px rgba(83,70,203,.23);font-size:18px;font-weight:900;opacity:0;transform:translate(-50%,12px)}
-    .stage.playing .group .apple{animation:appleIn .42s ease forwards}
-    .stage.playing .group .apple:nth-child(2){animation-delay:.2s}.stage.playing .group .apple:nth-child(3){animation-delay:.4s}
-    .stage.playing .group.right .apple:nth-child(1){animation-delay:.7s}.stage.playing .group.right .apple:nth-child(2){animation-delay:.9s}.stage.playing .group.right .apple:nth-child(3){animation-delay:1.1s}
-    .stage.playing .plus{animation:pop .35s 1.35s ease forwards,fade .25s 2.65s forwards}
-    .stage.playing .group.left{animation:mergeLeft .75s 1.95s ease forwards,fade .3s 2.72s forwards}
-    .stage.playing .group.right{animation:mergeRight .75s 1.95s ease forwards,fade .3s 2.72s forwards}
-    .stage.playing .result{animation:resultIn .55s 2.9s ease forwards}
-    .stage.playing .count{animation:show .25s 3.3s forwards}
-    .stage.playing .count i{animation:countPop .35s ease forwards}.stage.playing .count i:nth-child(1){animation-delay:3.35s}.stage.playing .count i:nth-child(2){animation-delay:3.55s}.stage.playing .count i:nth-child(3){animation-delay:3.75s}.stage.playing .count i:nth-child(4){animation-delay:3.95s}.stage.playing .count i:nth-child(5){animation-delay:4.15s}.stage.playing .count i:nth-child(6){animation-delay:4.35s}
-    .stage.playing .equation{animation:equationIn .45s 4.55s ease forwards}
+    .stage.playing .group .apple{animation:appleIn .55s ease forwards}
+    .stage.playing .group.left .apple:nth-child(1){animation-delay:5.4s}.stage.playing .group.left .apple:nth-child(2){animation-delay:6.3s}.stage.playing .group.left .apple:nth-child(3){animation-delay:7.2s}
+    .stage.playing .group.right .apple:nth-child(1){animation-delay:10.1s}.stage.playing .group.right .apple:nth-child(2){animation-delay:11s}.stage.playing .group.right .apple:nth-child(3){animation-delay:11.9s}
+    .stage.playing .plus{animation:pop .5s 13.1s ease forwards,fade .35s 16.45s forwards}
+    .stage.playing .group.left{animation:mergeLeft 1.6s 14.35s ease forwards,fade .4s 16.45s forwards}
+    .stage.playing .group.right{animation:mergeRight 1.6s 14.35s ease forwards,fade .4s 16.45s forwards}
+    .stage.playing .result{animation:resultIn .75s 16.9s ease forwards}
+    .stage.playing .count{animation:show .25s 17.8s forwards}
+    .stage.playing .count i{animation:countPop .45s ease forwards}.stage.playing .count i:nth-child(1){animation-delay:18.1s}.stage.playing .count i:nth-child(2){animation-delay:18.7s}.stage.playing .count i:nth-child(3){animation-delay:19.3s}.stage.playing .count i:nth-child(4){animation-delay:19.9s}.stage.playing .count i:nth-child(5){animation-delay:20.5s}.stage.playing .count i:nth-child(6){animation-delay:21.1s}
+    .stage.playing .equation{animation:equationIn .65s 22.5s ease forwards}
     @keyframes appleIn{to{opacity:1;transform:translateY(0) scale(1)}}
     @keyframes pop{70%{opacity:1;transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
     @keyframes mergeLeft{to{transform:translateX(65px) scale(.86)}}@keyframes mergeRight{to{transform:translateX(-65px) scale(.86)}}
@@ -126,6 +131,12 @@
     <section class="content">
       <div class="teacher-tip"><img src="shuxiaojia.png" alt="数小嘉"><p>没关系，我们把两组苹果放在一起，慢慢数一数吧！</p></div>
       <article class="card">
+        <div id="startPanel" class="start-panel">
+          <img src="shuxiaojia.png" alt="数小嘉">
+          <h2>苹果动画准备好啦！</h2>
+          <p>点击后开启语音并播放约26秒</p>
+          <button id="startPlayButton" type="button">▶ 播放动画</button>
+        </div>
         <div class="title">我们用苹果来理解 3＋3</div>
         <p class="subtitle">三颗红苹果，加上三颗绿苹果</p>
         <div id="stage" class="stage">
@@ -142,9 +153,10 @@
           <button class="return-button return-to-coze" type="button">返回数小嘉</button>
         </div>
       </article>
-      <p class="footer-note">动画结束后可重新播放，或返回扣子继续对话</p>
+      <p class="footer-note">若首次打开没有声音，请点击“重新播放”开启音效</p>
     </section>
   </main>
+  <audio id="narration" preload="auto" src="audio/animation_int.mp3"></audio>
   <script>
     // 扣子公开体验地址。无法返回上一页时，会打开此链接。
     const COZE_URL = "https://www.coze.cn/store/agent/7653366365516185650?bot_id=true";
@@ -152,23 +164,79 @@
     const stage = document.getElementById("stage");
     const conclusion = document.getElementById("conclusion");
     const actions = document.getElementById("actions");
+    const startPanel = document.getElementById("startPanel");
+    const narration = document.getElementById("narration");
     let finishTimer;
+    let audioContext;
+    let activeSoundNodes=[];
+
+    function stopAnimationSounds(){
+      activeSoundNodes.forEach(node=>{try{node.stop()}catch{}});
+      activeSoundNodes=[];
+    }
+
+    function createTone(frequency,start,duration=.12,volume=.055,type="sine"){
+      const oscillator=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+      oscillator.type=type;
+      oscillator.frequency.setValueAtTime(frequency,start);
+      oscillator.frequency.exponentialRampToValueAtTime(frequency*1.16,start+duration);
+      gain.gain.setValueAtTime(.0001,start);
+      gain.gain.exponentialRampToValueAtTime(volume,start+.018);
+      gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start(start);
+      oscillator.stop(start+duration+.02);
+      activeSoundNodes.push(oscillator);
+    }
+
+    function playAnimationSounds(){
+      try{
+        audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+        audioContext.resume().then(()=>{
+          stopAnimationSounds();
+          const now=audioContext.currentTime+.04;
+          const appleTimes=[5.4,6.3,7.2,10.1,11,11.9];
+          const appleNotes=[590,640,690,740,790,850];
+          appleTimes.forEach((delay,index)=>createTone(appleNotes[index],now+delay,.13,.05,"sine"));
+          createTone(523,now+22.5,.18,.035,"triangle");
+          createTone(659,now+22.65,.18,.035,"triangle");
+          createTone(784,now+22.8,.24,.04,"triangle");
+        }).catch(()=>{});
+      }catch{}
+    }
 
     function playAnimation(){
       clearTimeout(finishTimer);
+      stopAnimationSounds();
+      narration.pause();
+      narration.currentTime=0;
+      startPanel.classList.add("hide");
       stage.classList.remove("playing");
       conclusion.classList.remove("show");
       actions.classList.remove("show");
       void stage.offsetWidth;
       stage.classList.add("playing");
+      playAnimationSounds();
+      narration.play().catch(()=>{
+        startPanel.classList.remove("hide");
+      });
       finishTimer=setTimeout(()=>{
         conclusion.classList.add("show");
         actions.classList.add("show");
-      },5050);
+      },26500);
+    }
+
+    function finishAnimation(){
+      clearTimeout(finishTimer);
+      conclusion.classList.add("show");
+      actions.classList.add("show");
     }
 
     function returnToCoze(){
       clearTimeout(finishTimer);
+      stopAnimationSounds();
+      narration.pause();
       const cameFromCoze = /(^|\.)coze\.cn$/i.test(document.referrer ? new URL(document.referrer).hostname : "");
       if(cameFromCoze && history.length>1){
         history.back();
@@ -182,9 +250,18 @@
       window.location.href=COZE_URL;
     }
 
+    document.getElementById("startPlayButton").addEventListener("click",playAnimation);
     document.getElementById("replayButton").addEventListener("click",playAnimation);
+    narration.addEventListener("ended",finishAnimation);
     document.querySelectorAll(".return-to-coze").forEach(button=>button.addEventListener("click",returnToCoze));
-    window.addEventListener("pageshow",playAnimation);
+    window.addEventListener("pageshow",()=>{
+      narration.pause();
+      narration.currentTime=0;
+      stage.classList.remove("playing");
+      conclusion.classList.remove("show");
+      actions.classList.remove("show");
+      startPanel.classList.remove("hide");
+    });
   </script>
 </body>
 </html>
